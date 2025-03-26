@@ -26,4 +26,11 @@ fi
 echo "Starting local Nginx from: $NGINX_BIN"
 $NGINX_BIN -c "$NGINX_CONF"
 
-echo "Nginx is now running using $NGINX_CONF"
+# Confirm it actually started
+sleep 0.5
+if [ -f "$PID_FILE" ] && ps -p "$(cat "$PID_FILE")" > /dev/null 2>&1; then
+    echo "Nginx is now running using $NGINX_CONF (PID: $(cat "$PID_FILE"))"
+else
+    echo "Nginx failed to start. Check logs or config."
+    exit 1
+fi
