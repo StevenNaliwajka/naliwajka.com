@@ -3,7 +3,7 @@
 set -e
 cd "$(dirname "$0")"
 
-PROJECT_ROOT="$(pwd)"
+PROJECT_ROOT="$(cd "$(dirname "$0")" && pwd)"
 NGINX_BIN="$PROJECT_ROOT/nginx/sbin/nginx"
 NGINX_CONF="$PROJECT_ROOT/Codebase/Config/nginx.conf"
 PID_FILE="/tmp/nginx-local.pid"
