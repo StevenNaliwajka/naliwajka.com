@@ -19,6 +19,10 @@ PID_FILE="/tmp/nginx-local.pid"
 echo "Ensuring sites-enabled directory exists..."
 mkdir -p "$SITES_ENABLED"
 
+# Clean up old template symlinks if any
+echo "Cleaning up *.template symlinks in sites-enabled..."
+find "$SITES_ENABLED" -name "*.template" -type l -delete
+
 echo ""
 echo "Deploying Nginx site configs..."
 
@@ -26,7 +30,7 @@ link_config() {
     local domain="$1"
 
     if [[ "$domain" == "example.com" ]]; then
-        echo "Skipping template config: $domain"
+        echo "Skipping example config: $domain"
         return
     fi
 
@@ -48,7 +52,7 @@ if [ "$#" -eq 0 ]; then
     for file in "$SITES_AVAILABLE"/*; do
         domain=$(basename "$file")
 
-        # Skip any *.template files
+        # Skip *.template files
         if [[ "$domain" == *.template ]]; then
             echo "Skipping template file: $domain"
             continue
@@ -58,25 +62,24 @@ if [ "$#" -eq 0 ]; then
     done
 else
     for domain in "$@"; do
-        # Prevent users from accidentally passing a .template
         if [[ "$domain" == *.template ]]; then
             echo "Skipping template argument: $domain"
             continue
         fi
-
         link_config "$domain"
     done
 fi
 
-
-# Test and reload Nginx
+# Test and reload
 echo ""
 echo "Testing Nginx configuration..."
 $NGINX_BIN -t -c "$NGINX_CONF"
 
+echo ""
 if [ -f "$PID_FILE" ] && ps -p "$(cat "$PID_FILE")" > /dev/null 2>&1; then
-    echo "Reloading Nginx..."
-    $NGINX_BIN -s reload
+    PID=$(cat "$PID_FILE")
+    echo "Reloading Nginx via PID: $PID"
+    kill -HUP "$PID"
 else
     echo "No running Nginx instance found to reload."
 fi
