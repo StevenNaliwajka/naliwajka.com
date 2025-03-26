@@ -1,8 +1,6 @@
 server {
     listen 80 default_server;
-    listen 192.168.30.104:80;
-
-    server_name naliwajka.com www.naliwajka.com;
+    server_name _;
 
     root /root/naliwajka.com/Codebase/Website;
     index index.html;
