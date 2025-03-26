@@ -15,15 +15,6 @@ if [ -f "$DEPLOY_SCRIPT" ]; then
     bash "$DEPLOY_SCRIPT"
 fi
 
-# Stop existing instance if running
-if [ -f "$PID_FILE" ] && ps -p "$(cat "$PID_FILE")" > /dev/null 2>&1; then
-    echo "Stopping existing Nginx instance..."
-    $NGINX_BIN -s stop
-    sleep 1
-else
-    echo "No running Nginx instance found to stop."
-fi
-
 # Start Nginx
 echo "Starting local Nginx from: $NGINX_BIN"
 $NGINX_BIN -c "$NGINX_CONF"
