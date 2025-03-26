@@ -8,6 +8,10 @@ NGINX_BIN="$PROJECT_ROOT/nginx/sbin/nginx"
 NGINX_CONF="$PROJECT_ROOT/Codebase/Config/nginx.conf"
 PID_FILE="/tmp/nginx-local.pid"
 
+if [ -f "$PROJECT_ROOT/nginx/logs/nginx.pid" ]; then
+    rm -f "$PROJECT_ROOT/nginx/logs/nginx.pid"
+fi
+
 # Optionally run deploy
 DEPLOY_SCRIPT="$PROJECT_ROOT/Codebase/Deploy/deploy.sh"
 if [ -f "$DEPLOY_SCRIPT" ]; then
