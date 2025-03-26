@@ -24,8 +24,14 @@ echo ""
 
 # Install required dependencies
 echo "Installing required packages..."
-sudo apt update
-sudo apt install -y "${REQUIRED_PACKAGES[@]}"
+# Use sudo only if not already root
+SUDO=""
+if [ "$EUID" -ne 0 ]; then
+    SUDO="sudo"
+fi
+
+$SUDO apt update
+$SUDO apt install -y "${REQUIRED_PACKAGES[@]}"
 echo ""
 
 # Prepare source build folder
