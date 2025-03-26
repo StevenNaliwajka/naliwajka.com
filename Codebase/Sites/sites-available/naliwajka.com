@@ -15,6 +15,6 @@ server {
         allow all;
     }
 
-    access_log /var/log/nginx/naliwajka_access.log;
-    error_log  /var/log/nginx/naliwajka_error.log;
+    access_log /root/naliwajka.com/logs/naliwajka_access.log;
+    error_log  /root/naliwajka.com/logs/naliwajka_error.log;
 }

@@ -2,6 +2,12 @@
 
 set -e
 
+# Ensure logs directory exists
+LOG_DIR="$PROJECT_ROOT/logs"
+echo "Ensuring log directory exists at: $LOG_DIR"
+mkdir -p "$LOG_DIR"
+
+
 echo "Starting full setup..."
 
 # Install Nginx
