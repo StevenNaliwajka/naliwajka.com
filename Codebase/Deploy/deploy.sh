@@ -56,14 +56,9 @@ echo ""
 echo "Testing Nginx configuration..."
 $NGINX_BIN -t -c "$NGINX_CONF"
 
-if [ -f /tmp/nginx-local.pid ]; then
+if [ -f "$PID_FILE" ] && ps -p "$(cat "$PID_FILE")" > /dev/null 2>&1; then
     echo "Reloading Nginx..."
-  if [ -f "$PID_FILE" ] && ps -p "$(cat "$PID_FILE")" > /dev/null 2>&1; then
-      echo "Reloading Nginx..."
-      $NGINX_BIN -s reload
-  else
-      echo "No running Nginx instance found to reload."
-  fi
+    $NGINX_BIN -s reload
 else
     echo "No running Nginx instance found to reload."
 fi
