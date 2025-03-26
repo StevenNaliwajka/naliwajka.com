@@ -8,11 +8,6 @@ NGINX_BIN="$PROJECT_ROOT/nginx/sbin/nginx"
 NGINX_CONF="$PROJECT_ROOT/Codebase/Config/nginx.conf"
 PID_FILE="/tmp/nginx-local.pid"
 
-# Optional cleanup
-if [ -f "$PID_FILE" ]; then
-    echo "Removing stale PID file..."
-    rm -f "$PID_FILE"
-fi
 
 # Run deploy before start
 DEPLOY_SCRIPT="$PROJECT_ROOT/Codebase/Deploy/deploy.sh"

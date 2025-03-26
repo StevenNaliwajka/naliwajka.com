@@ -56,8 +56,12 @@ echo ""
 echo "Testing Nginx configuration..."
 $NGINX_BIN -t -c "$NGINX_CONF"
 
-echo "Reloading Nginx..."
-$NGINX_BIN -s reload || true
+if [ -f /tmp/nginx-local.pid ]; then
+    echo "Reloading Nginx..."
+    $NGINX_BIN -s reload || true
+else
+    echo "No running Nginx instance found to reload."
+fi
 
 echo ""
 echo "Deployment complete."
