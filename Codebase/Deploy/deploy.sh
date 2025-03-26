@@ -40,7 +40,7 @@ link_config() {
 
 # Deploy all or selected domains
 if [ "$#" -eq 0 ]; then
-    echo "🔍 No domains specified. Deploying all from $SITES_AVAILABLE..."
+    echo "No domains specified. Deploying all from $SITES_AVAILABLE..."
     for file in "$SITES_AVAILABLE"/*; do
         domain=$(basename "$file")
         link_config "$domain"
