@@ -34,6 +34,6 @@ fi
 
 # Start Nginx
 echo "Starting local Nginx from: $NGINX_BIN"
-$NGINX_BIN -c "$NGINX_CONF" -g "pid $PID_FILE;"
+$NGINX_BIN -c "$NGINX_CONF"
 
 echo "Nginx is now running using $NGINX_CONF"
