@@ -8,7 +8,15 @@
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 2rem;
-            background-color: #f9f9f9;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .debug {
+            background-color: #ffeeba;
+            border: 1px solid #f5c6cb;
+            padding: 1rem;
+            margin: 2rem auto;
+            max-width: 600px;
         }
         img {
             max-width: 100%;
@@ -19,6 +27,17 @@
 <body>
     <h1>Welcome to naliwajka.com</h1>
     <p>What the scallop?</p>
-    <img src="Codebase/Website/assets/family-guy-happy-dance.gif" alt="PeterHittingThatThang">
+
+    <div class="debug">
+        <p><strong>DEBUG INFO</strong></p>
+        <p>Served from: <code>/root/naliwajka.com/Codebase/Website/index.html</code></p>
+        <p>Timestamp: <code id="ts"></code></p>
+    </div>
+
+    <img src="assets/family-guy-happy-dance.gif" alt="PeterHittingThatThang">
+
+    <script>
+        document.getElementById("ts").textContent = new Date().toLocaleString();
+    </script>
 </body>
 </html>
