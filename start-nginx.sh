@@ -19,7 +19,13 @@ fi
 # Stop existing instance
 if [ -f "$PID_FILE" ]; then
     echo "Stopping existing Nginx instance..."
-    $NGINX_BIN -s stop || true
+    if [ -f "$PID_FILE" ] && ps -p "$(cat "$PID_FILE")" > /dev/null 2>&1; then
+        echo "Stopping existing Nginx instance..."
+        $NGINX_BIN -s stop
+        sleep 1
+    else
+        echo "No running Nginx instance found to stop."
+    fi
     sleep 1
 fi
 
