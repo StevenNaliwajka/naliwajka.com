@@ -28,11 +28,17 @@ fi
 echo "Starting local Nginx from: $NGINX_BIN"
 $NGINX_BIN -c "$NGINX_CONF"
 
-# Confirm it actually started
-sleep 0.5
-if [ -f "$PID_FILE" ] && ps -p "$(cat "$PID_FILE")" > /dev/null 2>&1; then
-    echo "Nginx is now running using $NGINX_CONF (PID: $(cat "$PID_FILE"))"
+if [ -f "$PID_FILE" ]; then
+    PID=$(cat "$PID_FILE")
+    if ps -p "$PID" > /dev/null 2>&1; then
+        echo "Stopping existing Nginx instance (PID: $PID)..."
+        kill -QUIT "$PID"
+        sleep 1
+    else
+        echo "No running Nginx process found at PID $PID. Cleaning up stale PID file."
+        rm -f "$PID_FILE"
+    fi
 else
-    echo "Nginx failed to start. Check logs or config."
-    exit 1
+    echo "No PID file found — Nginx does not appear to be running."
 fi
+
