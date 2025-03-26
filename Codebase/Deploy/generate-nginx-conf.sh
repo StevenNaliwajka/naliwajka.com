@@ -14,4 +14,4 @@ fi
 PROJECT_PATH=$(cat "$PATH_FILE" | sed 's:/*$::')
 sed "s|{{PROJECT_PATH}}|$PROJECT_PATH|g" "$TEMPLATE" > "$OUTPUT"
 
-echo "✅ Generated nginx.conf with path: $PROJECT_PATH"
+echo "Generated nginx.conf with path: $PROJECT_PATH"

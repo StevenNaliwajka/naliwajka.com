@@ -47,13 +47,27 @@ if [ "$#" -eq 0 ]; then
     echo "No domains specified. Deploying all from $SITES_AVAILABLE..."
     for file in "$SITES_AVAILABLE"/*; do
         domain=$(basename "$file")
+
+        # Skip any *.template files
+        if [[ "$domain" == *.template ]]; then
+            echo "Skipping template file: $domain"
+            continue
+        fi
+
         link_config "$domain"
     done
 else
     for domain in "$@"; do
+        # Prevent users from accidentally passing a .template
+        if [[ "$domain" == *.template ]]; then
+            echo "Skipping template argument: $domain"
+            continue
+        fi
+
         link_config "$domain"
     done
 fi
+
 
 # Test and reload Nginx
 echo ""
