@@ -1,9 +1,8 @@
-# Backend static file server
 server {
     listen 80;
     server_name naliwajka.com www.naliwajka.com;
 
-    root /var/www/naliwajka.com;
+    root /root/naliwajka.com/Codebase/Website;
     index index.html;
 
     location / {
@@ -12,7 +11,7 @@ server {
 
     # Allow the reverse proxy to serve ACME challenge if needed
     location ~ ^/.well-known/acme-challenge/ {
-        root /var/www/naliwajka.com;
+        root /root/naliwajka.com/Codebase/Website;
         allow all;
     }
 
