@@ -7,7 +7,7 @@ echo "Starting full setup..."
 # Install Nginx
 echo ""
 echo "Installing local Nginx..."
-bash ./Codebase/Install/install-nginx.sh
+bash ./Codebase/Deploy/install-nginx.sh
 
 echo ""
 echo "Setup complete!"
