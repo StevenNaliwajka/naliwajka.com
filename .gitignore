@@ -177,3 +177,5 @@ mime.types
 .nginx-src/
 .idea
 logs
+Codebase/Config/nginx.conf
+Codebase/Sites/sites-available/naliwajka.com

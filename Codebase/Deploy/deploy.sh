@@ -2,14 +2,19 @@
 
 set -e
 
-# Dynamically determine paths
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(dirname "$(dirname "$SCRIPT_DIR")")"
+# Read project root from path.txt
+PATH_FILE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/../Config/path.txt"
+if [ ! -f "$PATH_FILE" ]; then
+    echo "path.txt not found at $PATH_FILE"
+    exit 1
+fi
+
+PROJECT_ROOT=$(cat "$PATH_FILE" | sed 's:/*$::')  # Strip trailing slashes
 NGINX_BIN="$PROJECT_ROOT/nginx/sbin/nginx"
 NGINX_CONF="$PROJECT_ROOT/Codebase/Config/nginx.conf"
-
 SITES_AVAILABLE="$PROJECT_ROOT/Codebase/Sites/sites-available"
 SITES_ENABLED="$PROJECT_ROOT/Codebase/Sites/sites-enabled"
+PID_FILE="/tmp/nginx-local.pid"
 
 echo "Ensuring sites-enabled directory exists..."
 mkdir -p "$SITES_ENABLED"
@@ -20,7 +25,6 @@ echo "Deploying Nginx site configs..."
 link_config() {
     local domain="$1"
 
-    # Skip template
     if [[ "$domain" == "example.com" ]]; then
         echo "Skipping template config: $domain"
         return
